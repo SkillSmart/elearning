@@ -17,7 +17,6 @@ class _LessonCreator extends Component {
         title: '',
         headline: '',
         slug: '',
-        content: '',
         tags: [],
         
         // Commerce Fields
@@ -27,6 +26,8 @@ class _LessonCreator extends Component {
         createdAt: '',
         assigned: [],
 
+        // Text Content
+        content: '',
         modules: [],
         lesson: [],
         quizzes: [],
@@ -107,11 +108,16 @@ class _LessonCreator extends Component {
 
     // Form Handlers
     handleChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value
         });
+    }
+
+    storeDraft = (content) => {
+        this.setState({content});
+        console.log(this.state.content);
     }
 
     onSubmit = (e) => {
@@ -119,6 +125,7 @@ class _LessonCreator extends Component {
         console.log(this.state);
     }
 
+    onChange = (editorState) => this.setState({editorState})
 
     // 
     render() {
@@ -179,7 +186,11 @@ class _LessonCreator extends Component {
                         </div>
 
                         <div className="layout">
-                            <TextEditor />
+                            <TextEditor 
+                                editorState={this.state.editorState}
+                                onChange={this.onTextChange}
+                                storeDraft={this.storeDraft}
+                            />
                             {/* This area can be used for drag and drop of exising items. On mouse over when
                             dragging it will show the place where the item will be positioned. On dropping,
                             it adds the item at the given location and moves all other items down in the
