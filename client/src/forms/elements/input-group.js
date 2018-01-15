@@ -54,7 +54,7 @@ export const InputGroup = styled(_InputGroup)`
         /* margin: 1rem; */
         font-size: 1.4rem;
 
-        :focus > .label {
+        ::active > .label {
             transform: translateY(0);
             color: inherit;
         }
@@ -65,6 +65,7 @@ export const InputGroup = styled(_InputGroup)`
         font-size: 1.3rem;
         transform: translateY(-2.2rem);
         color: transparent;
+        display: hidden;
     }
     
 

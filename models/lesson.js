@@ -7,12 +7,17 @@ const LessonSchema = new Schema({
     headline: String,
     slug: String,
     content: String,
-    lessonVideo: String,
+    lessonVideo: {
+        type: Schema.ObjectId,
+        ref: 'Video'
+    },
     tags: [String],
     createdAt: {type: String, default: Date.now()},
     assigned: {type: Boolean, default: false},
-    video: String,
-    documents: Boolean
+    documents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Document'
+    }]
 
 })
 
