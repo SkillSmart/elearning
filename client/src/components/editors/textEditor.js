@@ -2,128 +2,119 @@ import React, {Component} from 'react';
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import styled from 'styled-components';
 
+import {BlockStyleControls, InlineStyleControls} from '../editors';
+
 class _TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty()
     };
+    this.handleKeyCommand = this._handleKeyCommand.bind(this);
+    this.toggleBlockType = this._toggleBlockType.bind(this);
+    this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
+    this.onTab = this._onTab.bind(this);
   }
-  
-  onChange = editorState => this.setState({editorState});
 
-  handleKeyCommand = (command, editorState) => {
+  focus = () => this.refs.editor.focus();
+  onChange = (editorState) => this.setState({editorState}) 
+
+
+  _handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
-      return 'handled';
+      return true;
     }
-    return 'not-handled';
-  }
+    return false;
+  } 
 
-  // KEYBOARD HOOKS
-  _onTab = (e) => {
-    const maxDepth = 4;
+  _onTab(e) {
+    e.preventDefault();
+    const maxDepth=4;
     this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
   }
 
-  _toggleBlockType = (blockType) => {
+  _toggleBlockType(blockType) {
     this.onChange(
       RichUtils.toggleBlockType(
         this.state.editorState,
-        blockType      
+        blockType
       )
     );
-  }
+  };
 
-  _toggleInlineStyle = (inlineStyle) => {
+  _toggleInlineStyle(inlineStyle) {
     this.onChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
         inlineStyle
       )
     );
-  }
+  };
 
-  // BUTTON COMMANDS
-  // Inline Textstyles
-  _onBoldClick = () => {
-    this._toggleInlineStyle('BOLD');
+  // Custom Overrrides for Code Style
+  styleMap = {
+    CODE: {
+      backgroundColor: 'rgba(0,0,0,.05)',
+      fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+      fontSize: "1.6rem",
+      padding: 2,
+    },
+  };
+
+  getBlockStyle = (block) => {
+    switch (block.getType()) {
+      case 'blockquote': return 'RichEditor-blockquote';
+      default: return null;
+    }
   }
-  _onItalicClick = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onUnderlineClick = () => {
-    this._toggleInlineStyle('UNDERLINE');
-  }
-  _onLinetroughClick = () => {
-    this._toggleInlineStyle('LINE-TROUGH');
-  }
-  _onOverlineClick = () => {
-    this._toggleInlineStyle('OVERLINE');
-  }
-  // Headings
-  _onH1Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onH2Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onH3Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onH4Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onH5Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
-  _onH6Click = () => {
-    this._toggleInlineStyle('ITALIC');
-  }
+  
 
   render() {
+    const {editorState} = this.state;
     let {className} = this.props;
     return (
       <div className={className}>
         <div className="controls">
-          <button onClick={this._onBoldClick}><strong>B</strong></button>
-          <button onClick={this._onItalicClick}><i>I</i></button>
-          <button onClick={this._onUnderlineClick}><span style={{textDecoration: "underline"}}>U</span></button>
-          <button onClick={this._onLinetroughClick}><span style={{textDecoration: "line-through"}}>U</span></button>
-          <button onClick={this._onOverlineClick}><span style={{textDecoration: "overline"}}>U</span></button>
-          <button onClick={this._onH1Click}>H1</button>
-          <button onClick={this._onH2Click}>H2</button>
-          <button onClick={this._onH3Click}>H3</button>
-          <button onClick={this._onH4Click}>H4</button>
-          <button onClick={this._onH5Click}>H5</button>
-          <button onClick={this._onH6Click}>H6</button>
+          <BlockStyleControls 
+            editorState={editorState}
+            onToggle={this.toggleBlockType}
+          />
+          <InlineStyleControls 
+            editorState={editorState}
+            onToggle={this.toggleInlineStyle}
+          />
         </div>
-        <Editor
-          className="editorField"
-          editorState={this.state.editorState}
-          handleKeyCommand={this.handleKeyCommand}
-          onChange={this.onChange}/>
+        <div className="editor" onClick={this.focus}>
+          <Editor
+            blockStyleFn={this.getBlockStyle}
+            customStyleMap={this.styleMap}
+            editorState={editorState}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
+            onTab={this.onTab}
+            placeholder="Tell your story....."
+            ref="editor"
+            spellCheck={true}
+            />
+        </div>
       </div>
     )
   }
 }
 
 export const TextEditor = styled(_TextEditor)`
-    border: 1px solid green;
-    padding: 2.5rem;
     font-family: inherit;
-    font-size: 1.6rem;
 
     .controls {
-      display: flex;
-      border-bottom: 1px solid lightgrey;
-      width: 70%;
-      
-      button {
-        border: none;
-        padding: .5rem 1rem;
-        margin-right: .5rem;
-      }
+      display: grid;
+      border: 1px solid lightgrey;
     }
+
+    .editor {
+      padding: 2.5rem 3.5rem;
+      font-size: 1.6rem;
+
+    } 
 `;

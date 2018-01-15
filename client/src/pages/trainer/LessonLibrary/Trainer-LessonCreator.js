@@ -199,7 +199,7 @@ class _LessonCreator extends Component {
 
 export default styled(_LessonCreator)`
     display: grid;
-    grid-template-columns: minmax(25rem, .5fr) 1fr;
+    grid-template-columns: minmax(20rem, .2fr) 1fr;
     grid-template-areas:
         "side main"
         "foot foot";
@@ -235,7 +235,7 @@ export default styled(_LessonCreator)`
             grid-area: main;
             display: grid;
             grid-gap: 1.5rem;
-            grid-template-rows: minmax(10rem, min-content) minmax(15rem, min-content) minmax(8rem, 1fr) minmax(40vh, 3fr);
+            grid-template-rows: minmax(10rem, min-content) minmax(10rem, min-content) minmax(8rem, 1fr) minmax(40vh, 3fr);
             grid-template-areas:
                 "video video video product"
                 "header header header product"
