@@ -54,7 +54,7 @@ const typeDefs = `
         deleteModule(id: ID!): Module!
 
         # COURSE ------------
-        createCourse(title: String!): Course!
+        createCourse(title: String!): Course
         updateCourse(id: ID, title: String, data: String): Course
         deleteCourse(courseId: ID!, data: String): Course!
         favCourse(courseId: ID!, userId: ID!): Course!

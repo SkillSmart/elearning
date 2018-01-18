@@ -56,6 +56,7 @@ module.exports = {
     // Lesson
     lessonById,
     lessons,
+    
     // Video
     videoById,
     videos,
