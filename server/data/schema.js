@@ -39,33 +39,61 @@ const typeDefs = `
         signup(email:String!, password: String!): AuthPayload!
         login(email: String!, password: String!): AuthPayload!
         updateAccount(userId: ID!, data: String!): User! 
-        deleteAccount(id: ID!): User!
+        removeAccount(id: ID!): User!
         
         # LESSON ------------
+        input LessonInput {
+            title: String!
+            summary: String!
+            content: String!
+        }
         createLesson(title: String!): Lesson!
-        updateLesson(id: ID!): Lesson!
-        deleteLesson(id: ID!): Lesson!
+        updateLesson(id: ID!, data: String!): Lesson!
+        removeLesson(id: ID!): Lesson!
         favLesson(lessonId: ID!, userId: ID!): User!
         commentLesson(lessonId: ID!, userId: ID!, Comment: String!): Lesson!
 
         # MODULE ------------
+        input ModuleInput {
+            title: String!
+            headline: String!
+        }
         createModule(title: String!): Module!
-        updateModule(id: ID!, data: String): Module!
-        deleteModule(id: ID!): Module!
+        updateModule(id: ID!, data: ModuleInput!): Module!
+        removeModule(id: ID!): Module!
 
         # COURSE ------------
+        input CourseInput {
+            title: String!
+            headline: String
+            summary: String
+        }
         createCourse(title: String!): Course
-        updateCourse(id: ID, title: String, data: String): Course
-        deleteCourse(courseId: ID!, data: String): Course!
+        updateCourse(id: ID, data: CourseInput!): Course
+        removeCourse(courseId: ID!, data: String): Course!
         favCourse(courseId: ID!, userId: ID!): Course!
 
         # VIDEO -------------
-        createVideo(url: String!, title:String!): Video
+        input VideoInput {
+            title: String!
+            url: String!
+        }
+        createVideo(url: String!, title:String!): Video!
+        updateVideo(id: ID!, data:VideoInput!): Video!
+        removeVideo(id: ID!): Video!
+
+        # DOCUMENT ----------
+        input DocumentInput {
+            title: String!
+            url: String!
+        }
+        createDocument(title: String!): Document!
+        updateDocument(id: ID!, data: DocumentInput!): Document!
+        removeDocument(id: ID!): Document!
     }
 
     type Subscription {
         newCourse: String
-
     }
 
     type User {

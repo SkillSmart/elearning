@@ -54,6 +54,20 @@ const updateLesson = (_, {id, data}) => {
 const removeLesson = (_, {id}) => {
     return models.findOneAndRemove(id);
 };
+// ACTIONS: LESSON
+const favLesson = async (_, {userId, lessonId}) => {
+    const user = models.User.findOne({_id: id});
+    const lesson = models.Lesson.findOne({_id: id});
+    user.favoriteLessons.push(lessonId);
+    lesson.favs.push(userId);
+    await lesson.save();
+    return await user.save();
+};
+const toggleLessonStatus = async (_, {lessonId}) => {
+    const lesson = models.Lesson.findById(id);
+    lesson.published = !lesson.published;
+    return lesson;
+};
 
 ///////// VIDEO
 const createVideo = (_, {title, url}) => {
@@ -76,7 +90,6 @@ const updateDocument = (_, {id, data}) => {
 const removeDocument = (_, {id}) => {
     return models.Document.findOneAndRemove(id);
 };
-
 
 
 
@@ -104,8 +117,4 @@ module.exports = {
     createDocument,
     updateDocument,
     removeDocument,
-    // Note
-    createNote,
-    updateNote,
-    removeNote
 }
