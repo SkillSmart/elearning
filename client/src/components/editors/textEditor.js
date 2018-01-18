@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
+import {
+  Editor, 
+  EditorState, 
+  RichUtils, 
+  convertToRaw, 
+  CompositeDecorator,
+  findLinkEntities,
+  Link
+} from 'draft-js';
 import styled from 'styled-components';
 
 import {BlockStyleControls, InlineStyleControls} from '../editors';
@@ -7,8 +15,19 @@ import {BlockStyleControls, InlineStyleControls} from '../editors';
 class _TextEditor extends Component {
   constructor(props) {
     super(props);
+
+    // Set up decorator to enable handling of linked content
+    const decorator = new CompositeDecorator([
+      {
+        strategy: findLinkEntities,
+        component: Link
+      }
+    ]);
+
     this.state = {
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.createEmpty(decorator),
+      showURLInput: false,
+      urlValue: '',
     };
     this.handleKeyCommand = this
       ._handleKeyCommand
@@ -22,8 +41,14 @@ class _TextEditor extends Component {
     this.onTab = this
       ._onTab
       .bind(this);
+    // this.promptForLink = this._promptForLink.bind(this);
+    this.onURLChange = (e) => this.setState({urlValue: e.target.value});
+    // this.confirmLink = this._confirmLink.bind(this);
+    // this.onLinkInputKeyDown = this._onLinkInputKeyDown.bind(this);
+    // this.removeLink = this._removeLink.bind(this);
   }
 
+  // State Change Handlers
   focus = () => this
     .refs
     .editor
@@ -42,6 +67,7 @@ class _TextEditor extends Component {
       .storeDraft(convertToRaw(content));
   };
 
+  // Input Handlers
   _handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -57,6 +83,7 @@ class _TextEditor extends Component {
     this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
   }
 
+  // Style Handlers
   _toggleBlockType(blockType) {
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
   };
@@ -64,6 +91,31 @@ class _TextEditor extends Component {
   _toggleInlineStyle(inlineStyle) {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
   };
+
+  // Content Markup Handler
+  _promptForLink = (e) => {
+    e.preventDefault();
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      const contentState = editorState.getCurrentContent();
+      const startKey = editorState.getSelection().getStartKey();
+      const startOffset = editorState.getSelection().getStartOffset();
+      const blockWithLinkAtBeginning = contentState.getBlockForKey(startKey);
+      const linkKey = blockWithLinkAtBeginning.getEntityAt(startOffset);
+
+      let url = '';
+      if (linkKey) {
+        const linkInstance = contentState.getEntity(linkKey);
+        url = linkInstance.getData().url;
+      }
+
+      this.setState({
+        showURLInput: true,
+        urlValue: url
+      })
+    }
+  }
 
   // Custom Overrrides for Code Style
   styleMap = {

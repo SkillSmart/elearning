@@ -27,7 +27,7 @@ class _LessonCreator extends Component {
         assigned: [],
 
         // Text Content
-        content: '',
+        content: {},
         modules: [],
         lesson: [],
         quizzes: [],
@@ -125,7 +125,6 @@ class _LessonCreator extends Component {
         console.log(this.state);
     }
 
-    onChange = (editorState) => this.setState({editorState})
 
     // 
     render() {
