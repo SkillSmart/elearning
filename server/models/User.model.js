@@ -12,4 +12,6 @@ const UserSchema = new Schema({
         ref: "Course"
     }],
 
-})
+});
+
+module.exports = mongoose.model('User', UserSchema);
