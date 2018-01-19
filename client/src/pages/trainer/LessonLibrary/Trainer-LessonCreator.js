@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 // Hook up Graphql
 import {graphql} from 'react-apollo';
-import {lesson} from '../../../queries';
+import {lesson} from '../../../mutations';
 // Components
 import ReactPlayer from 'react-player';
 import {TextEditor} from '../../../components';
