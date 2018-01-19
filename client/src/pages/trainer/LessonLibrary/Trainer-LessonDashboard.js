@@ -14,7 +14,10 @@ import {Route} from 'react-router-dom';
 class _TrainerCourseLibraryDashboard extends Component {
 
     render() {
-        let {className} = this.props;
+        
+        let {className, data: {lessons, loading}} = this.props;
+        console.log(this.props);
+        if(loading) return <div>Loading.....</div>
         return (
             <div className={className}>
                 
@@ -27,7 +30,7 @@ class _TrainerCourseLibraryDashboard extends Component {
                     <CourseQuickAddForm />
                 <h3>View Lessons by Course</h3>
                     <ul>
-                    {this.props.lessons.map( lesson => <li>{lesson.title}</li>)}
+                    {lessons.map( lesson => <li>{lesson.title}</li>)}
                     </ul>
                 </div>
             </div>
@@ -35,7 +38,7 @@ class _TrainerCourseLibraryDashboard extends Component {
     }
 }
 
-const styledTrainerCourseLibraryDashboard = styled(_TrainerCourseLibraryDashboard)`
+const TrainerCourseLibraryDashboard = styled(_TrainerCourseLibraryDashboard)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: 4rem minmax(10rem, .3fr) 1fr 2fr;
@@ -84,5 +87,4 @@ const styledTrainerCourseLibraryDashboard = styled(_TrainerCourseLibraryDashboar
 
 `;
 
-
-export default graphql(queries.lesson.getLessonListOverview)(styledTrainerCourseLibraryDashboard);
+export default graphql(queries.lesson.getLessonListOverview)(TrainerCourseLibraryDashboard);

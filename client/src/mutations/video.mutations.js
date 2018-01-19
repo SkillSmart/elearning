@@ -1,17 +1,18 @@
 import gql from 'graphql-tag';
 
+
 const addVideo = gql`
-    mutation AddVideo($videoUrl: String!, $videoTitle: String!) {
-        createVideo(videoUrl: $videoUrl, title: $videoTitle) {
+    mutation AddVideo($video: VideoInput!) {
+        createVideo(video: $video) {
             id
             videoUrl
-            title
+            videoTitle
         }
     }
 `;
 const addVideoToObject = gql`
-    mutation AddVideoToObject($videoId: ID!, $targetId: ID!, $target: String!) {
-        addVideo(videoId: $videoId, targetClass: $target, targetId: $lessonId) {
+    mutation AddVideoToObject($videoId: ID!, $targetId: ID!, $targetClass: String!) {
+        associateVideo(videoId: $videoId, targetClass: $targetClass, targetId: $lessonId) {
             id
         }
     }

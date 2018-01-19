@@ -7,18 +7,29 @@ const LessonSchema = new Schema({
     headline: String,
     slug: String,
     content: String,
-    lessonVideo: {
+    videos: [{
         type: Schema.ObjectId,
         ref: 'Video'
-    },
-    tags: [String],
-    createdAt: {type: String, default: Date.now()},
-    published: {type: Boolean, default: false},
+    }],
     documents: [{
         type: Schema.Types.ObjectId,
         ref: 'Document'
-    }]
-
+    }],
+    linkedCourses: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Lesson'
+    }],
+    linkedModules: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Modules'
+    }],
+    tags: [String],
+    favs: [{
+        type: Schema.ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {type: String, default: Date.now()},
+    published: {type: Boolean, default: false},
 })
 
 LessonSchema.pre('save', function(next) {

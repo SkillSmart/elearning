@@ -1,22 +1,19 @@
 import gql from 'graphql-tag';
 
 const quickAddLesson = gql`
-    mutation QuickAddLesson($data: LessonInput!) {
-        createLesson(data: $data) {
-            id
-            title
-            headline
-            summary
+    mutation CreateLesson($lesson: LessonInput!){
+        createLesson(lesson: $lesson) {
+          id
+          
         }
-    }
+      }
 `;
 
 const addLesson = gql`
-    mutation AddLesson($data: LessonInput!) {
-        createLesson(data: $data) {
+    mutation AddLesson($lesson: LessonInput!) {
+        createLesson(lesson: $lesson) {
             id
             title
-            headline
             summary
         }
     }

@@ -6,10 +6,10 @@ const getLessonListOverview = gql`
             id
             title
             tags
-            createdAt
-            favs {
-                id
-            }
+            # createdAt
+            # favs {
+            #     id
+            # }
         }
     }
 `;

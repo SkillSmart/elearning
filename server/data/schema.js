@@ -22,9 +22,13 @@ const typeDefs = `
         headline: String
         slug: String
         content: String
-        lessonVideo: ID
-        tags: [String]
+        videos: [ID]
+        published: Boolean
         documents: [ID]
+        linkedCourses: [ID]
+        linkedModules: [ID]
+        tags: [String]
+        favs: [ID]
     }
     input CourseInput {
         title: String!
@@ -32,13 +36,14 @@ const typeDefs = `
         summary: String
     }
     input VideoInput {
-        title: String!
-        url: String!
+        videoTitle: String!
+        videoUrl: String!
     }
     input DocumentInput {
         title: String!
         url: String!
     }
+
 
     type Query {
         # USER -------------
@@ -71,7 +76,7 @@ const typeDefs = `
         removeAccount(id: ID!): User!
         
         # LESSON ------------
-        createLesson(data: LessonInput!): Lesson!
+        createLesson(lesson: LessonInput!): Lesson!
         updateLesson(id: ID!, data: LessonInput!): Lesson!
         removeLesson(id: ID!): Lesson!
         favLesson(lessonId: ID!, userId: ID!): User!
@@ -92,11 +97,11 @@ const typeDefs = `
         favCourse(courseId: ID!, userId: ID!): Course!
 
         # VIDEO -------------
-        createVideo(url: String!, title:String): Video!
+        createVideo(video: VideoInput!): Video!
         updateVideo(id: ID!, data:VideoInput!): Video!
         removeVideo(id: ID!): Video!
         ### ACTIONS:VIDEO
-        associateVideo(videoId: ID!, targetId: ID!, targetClass: String!)
+        associateVideo(videoId: ID!, targetId: ID!, targetClass: String!): Video!
         
         # DOCUMENT ----------
         createDocument(title: String!): Document!
@@ -140,9 +145,14 @@ const typeDefs = `
 
     type Lesson {
         id: ID! @unique
-        title: String
+        title: String!
+        headline: String
+        slug: String
+        content: String
+        videos: [ID]
+        documents: [ID]
         linkedCourses: [Course]
-        linkedModules: [Module]\
+        linkedModules: [Module]
         tags: [String]
         favs: [User]
         createdAt: String
@@ -151,8 +161,9 @@ const typeDefs = `
 
 
     type Video {
-        url: String
-        title: String
+        id: ID! @unique
+        videoUrl: String
+        videoTitle: String
         headline: String
         views: Int
         favs: [User]

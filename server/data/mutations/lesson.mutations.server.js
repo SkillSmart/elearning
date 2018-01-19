@@ -1,8 +1,8 @@
-import models from '../../models';
+const models = require('../../models');
 
 ////////// LESSON
-const createLesson = (parentValue, {data}, context, info) => {
-    return models.Lesson.create(data);
+const createLesson = (parentValue, {lesson} , context, info) => {
+    return models.Lesson.create(lesson);
 };
 const updateLesson = (_, {id, data}) => {
     return models.findOneAndUpdate(id, data);

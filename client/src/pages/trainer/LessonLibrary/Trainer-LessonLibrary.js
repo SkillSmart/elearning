@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 // Hook up Graphql
 import {graphql} from 'react-apollo';
+import gql from 'graphql-tag';
 import {compose} from 'react-apollo';
 import queries from '../../../queries';
 import mutations from '../../../mutations';
@@ -14,8 +15,9 @@ import {LessonOverviewTable} from '../../../components';
 class _TrainerLessonLibrary extends Component {
 
 
+
     render() {
-        let {className, match, lessonData: {lessons}} = this.props;
+        let {className, match, lessonData: { lessons }} = this.props;
      
         console.log("[PROPS]", this.props);
         return (
@@ -32,34 +34,20 @@ class _TrainerLessonLibrary extends Component {
 
                 {/* The Sidebar*/}
                 <div className="sidebar">
-                <h3>Quick Add Lesson</h3>
-                    <LessonQuickAddForm />
-                <h3>View Lessons by Course</h3>
-
+                    <h3>Quick Add Lesson</h3>
+                        <LessonQuickAddForm />
+                    <h3>View Lessons by Course</h3>
                 </div>
+
+                <button onClick={this.props.addLesson}>Click me!</button>
             </div>
         )
     }
-}
+};
 
-// Connect the Data to props
-const TrainerLessonLibrary = compose(
-    // graphql(mutations.lesson.addLesson, {
-    //     name: 'addLesson'
-    // }),
-    // graphql(mutations.lesson.quickAddLesson, {
-    //     name: 'quickAddLesson'
-    // }),
-    graphql(queries.lesson.getLessonListOverview, {
-        name: 'lessonData'
-    }),
-    graphql(queries.course.getCourseListOverview, {
-        name: 'courseData'
-    })
-)(_TrainerLessonLibrary);
 
 // Export the styled component
-export default styled(TrainerLessonLibrary)`
+const TrainerLessonLibrary = styled(_TrainerLessonLibrary)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: minmax(10rem, .3fr) 1fr 2fr;
@@ -96,7 +84,16 @@ export default styled(TrainerLessonLibrary)`
         background: white;
     }
 
-
 `;
 
 
+export default compose(
+    graphql(gql`
+        mutation {
+            createLesson(data: {title: "My first selfmade lesson"}) {
+                id
+            }
+        }
+    `, {name: 'addLesson'}),
+    graphql(queries.lesson.getLessonListOverview, { name: 'lessonData'}),
+)(TrainerLessonLibrary)
