@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 // Hook up Graphql
 import {graphql} from 'react-apollo';
-import {lesson} from '../../../mutations';
+import mutations from '../../../mutations';
 // Components
 import ReactPlayer from 'react-player';
 import {TextEditor} from '../../../components';
@@ -111,7 +111,6 @@ class _LessonCreator extends Component {
 
     // Form Handlers
     handleChange = (e) => {
-        // console.log(e.target.value);
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value
@@ -210,7 +209,7 @@ class _LessonCreator extends Component {
     }
 }
 
-export default styled(_LessonCreator)`
+const styledLessonCreator = styled(_LessonCreator)`
     display: grid;
     grid-template-columns: minmax(20rem, .2fr) 1fr;
     grid-template-areas:
@@ -329,3 +328,8 @@ export default styled(_LessonCreator)`
         grid-area: foot;
     }
 `;
+
+
+
+// Hook up Data Services
+export default graphql(mutations.lesson.addLesson)(styledLessonCreator);

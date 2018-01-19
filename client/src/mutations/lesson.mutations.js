@@ -1,8 +1,8 @@
-import gql from 'graphql-tools';
+import gql from 'graphql-tag';
 
-const quickAddLesson = (data) => gql`
+const quickAddLesson = gql`
     mutation QuickAddLesson($data: LessonInput!) {
-        createLesson($data) {
+        createLesson(data: $data) {
             id
             title
             headline
@@ -10,9 +10,9 @@ const quickAddLesson = (data) => gql`
         }
     }
 `;
-const addLesson = (data) => gql`
+const addLesson = gql`
     mutation AddLesson($data: LessonInput!) {
-        createLesson($data) {
+        createLesson(data: $data) {
             id
             title
             headline
@@ -20,9 +20,9 @@ const addLesson = (data) => gql`
         }
     }
 `;
-const upgradeLesson = (data) => gql`
+const upgradeLesson = gql`
     mutation UpgradeLesson($id: ID!, $data:LessonInput!) {
-        updateLesson($id, $data) {
+        updateLesson(id:$id, data: $data) {
             id
             title
             headline
@@ -30,9 +30,9 @@ const upgradeLesson = (data) => gql`
         }
     }
 `;
-const removeLesson = (id) => gql`
+const removeLesson = gql`
     mutation RemoveLesson($id: ID!) {
-        removeLesson($id) {
+        removeLesson(id: $id) {
             id
             title
         }

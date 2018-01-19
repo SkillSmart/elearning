@@ -1,4 +1,4 @@
-import gql from 'graphql-tools';
+import gql from 'graphql-tag';
 
 const quickAddCourse = (data) => gql`
     mutation QuickAddCourse($data: CourseInput!) {
