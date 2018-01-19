@@ -11,6 +11,31 @@ const resolvers = {
 };
 
 const typeDefs = `
+
+    input ModuleInput {
+        title: String!
+        headline: String!
+    }
+
+    input LessonInput {
+        title: String!
+        summary: String!
+        content: String!
+    }
+    input CourseInput {
+        title: String!
+        headline: String
+        summary: String
+    }
+    input VideoInput {
+        title: String!
+        url: String!
+    }
+    input DocumentInput {
+        title: String!
+        url: String!
+    }
+
     type Query {
         # USER -------------
         userById(id: ID!): User
@@ -19,11 +44,11 @@ const typeDefs = `
         # COURSE -----------
         courseById(id: ID!): Course
         courseByTitle(title: String!): Course
-        courses(limit: Int): [Course]
+        courses(limit: Int): [Course]!
 
         # LESSON -----------
-        lessonById(id: ID!): Lesson
-        lessons(limit: Int): [Lesson]
+        lessonById(id: ID!): Lesson!
+        lessons(limit: Int): [Lesson]!
 
         # MODULE ------------
         moduleById(id: ID!): Module
@@ -36,57 +61,40 @@ const typeDefs = `
 
     type Mutation {
         # USER -------------
-        signup(email:String!, password: String!): AuthPayload!
+        signup(email: String!, password: String!): AuthPayload!
         login(email: String!, password: String!): AuthPayload!
         updateAccount(userId: ID!, data: String!): User! 
         removeAccount(id: ID!): User!
         
         # LESSON ------------
-        input LessonInput {
-            title: String!
-            summary: String!
-            content: String!
-        }
-        createLesson(title: String!): Lesson!
-        updateLesson(id: ID!, data: String!): Lesson!
+        
+        createLesson(data: LessonInput!): Lesson!
+        updateLesson(id: ID!, data: LessonInput!): Lesson!
         removeLesson(id: ID!): Lesson!
         favLesson(lessonId: ID!, userId: ID!): User!
         commentLesson(lessonId: ID!, userId: ID!, Comment: String!): Lesson!
 
         # MODULE ------------
-        input ModuleInput {
-            title: String!
-            headline: String!
-        }
+        
         createModule(title: String!): Module!
         updateModule(id: ID!, data: ModuleInput!): Module!
         removeModule(id: ID!): Module!
 
         # COURSE ------------
-        input CourseInput {
-            title: String!
-            headline: String
-            summary: String
-        }
+        
         createCourse(title: String!): Course
         updateCourse(id: ID, data: CourseInput!): Course
         removeCourse(courseId: ID!, data: String): Course!
         favCourse(courseId: ID!, userId: ID!): Course!
 
         # VIDEO -------------
-        input VideoInput {
-            title: String!
-            url: String!
-        }
+
         createVideo(url: String!, title:String!): Video!
         updateVideo(id: ID!, data:VideoInput!): Video!
         removeVideo(id: ID!): Video!
 
         # DOCUMENT ----------
-        input DocumentInput {
-            title: String!
-            url: String!
-        }
+
         createDocument(title: String!): Document!
         updateDocument(id: ID!, data: DocumentInput!): Document!
         removeDocument(id: ID!): Document!

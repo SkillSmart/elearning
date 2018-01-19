@@ -16,8 +16,12 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "graphql": "^0.12.3",
+    "graphql-cli": "^2.12.4",
     "graphql-tools": "^2.18.0",
     "mongoose": "^4.13.9",
     "nodemon": "^1.14.10"
+  },
+  "devDependencies": {
+    "@playlyfe/gql": "^2.4.0"
   }
 }
