@@ -1,17 +1,17 @@
 import gql from 'graphql-tag';
 
-const quickAddCourse = (data) => gql`
+const quickAddCourse =  gql`
     mutation QuickAddCourse($data: CourseInput!) {
-        createCourse($data) {
+        createCourse(data: $data) {
             id
             title
             headline
         }
     }
 `;
-const addCourse = (data) => gql`
+const addCourse =  gql`
     mutation AddCourse($data: CourseInput!) {
-        createCourse($data) {
+        createCourse(data: $data) {
             id
             title
             headline
@@ -29,7 +29,7 @@ const addCourse = (data) => gql`
         }
     }
 `;
-const updateCourse = (data) => gql`
+const updateCourse =  gql`
     mutation UpdateCourse($id: ID!, $data: CourseInput!) {
         updateCourse(id: $id, data:$data) {
             id
@@ -39,9 +39,9 @@ const updateCourse = (data) => gql`
         }
     }
 `;
-const removeCourse = (id) => gql`
+const removeCourse = gql`
     mutation RemoveCourse($id: ID!) {
-        removeCourse($id) {
+        removeCourse(id: $id) {
             id
             title
         }
