@@ -13,7 +13,7 @@ const LessonSchema = new Schema({
     },
     tags: [String],
     createdAt: {type: String, default: Date.now()},
-    assigned: {type: Boolean, default: false},
+    published: {type: Boolean, default: false},
     documents: [{
         type: Schema.Types.ObjectId,
         ref: 'Document'

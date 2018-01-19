@@ -7,6 +7,10 @@ const DocumentSchema = new Schema({
     linkedLessons: [{
         type: Schema.Types.ObjectId,
         ref: 'Lesson'
+    }],
+    favs: [{
+        type: Schema.ObjectId,
+        ref: 'User'
     }]
 });
 

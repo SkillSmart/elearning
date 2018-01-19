@@ -1,4 +1,4 @@
-import gql from 'graphql-tools';
+import gql from 'graphql-tag';
 
 const getDocListOverview = gql`
     query DocumentListQuery {

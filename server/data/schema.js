@@ -19,8 +19,12 @@ const typeDefs = `
 
     input LessonInput {
         title: String!
-        summary: String!
-        content: String!
+        headline: String
+        slug: String
+        content: String
+        lessonVideo: ID
+        tags: [String]
+        documents: [ID]
     }
     input CourseInput {
         title: String!
@@ -67,7 +71,6 @@ const typeDefs = `
         removeAccount(id: ID!): User!
         
         # LESSON ------------
-        
         createLesson(data: LessonInput!): Lesson!
         updateLesson(id: ID!, data: LessonInput!): Lesson!
         removeLesson(id: ID!): Lesson!
@@ -88,8 +91,7 @@ const typeDefs = `
         favCourse(courseId: ID!, userId: ID!): Course!
 
         # VIDEO -------------
-
-        createVideo(url: String!, title:String!): Video!
+        createVideo(url: String!, title:String): Video!
         updateVideo(id: ID!, data:VideoInput!): Video!
         removeVideo(id: ID!): Video!
 
@@ -134,10 +136,12 @@ const typeDefs = `
 
     type Lesson {
         id: ID! @unique
-        title: String!
-        linkedCourses: [Course!]
-        linkedModules: [Module!]
-        favs: [User!]
+        title: String
+        linkedCourses: [Course]
+        linkedModules: [Module]\
+        tags: [String]
+        favs: [User]
+        createdAt: String
         published: Boolean
     }
 

@@ -1,5 +1,7 @@
 const models = require('../../models');
 
+const courseResolvers = require('./course.mutations.server');
+
 ////////// USER
 const signup = async (email, password) => {
     let user = models.User.findOne({email});
@@ -16,16 +18,7 @@ const signup = async (email, password) => {
     
 // }
 
-/////////// COURSE
-const createCourse = async (_, {title}) => {
-    return models.Course.create({title});
-};
-const updateCourse = (_, {id, data}) => {
-    return models.Course.findOneAndUpdate(id, data);
-};
-const removeCourse = (_, {id}) => {
-    return models.Course.findOneAndRemove({_id: id});
-};
+
 // ACTIONS: COURSE
 const favCourse = async (_, {userId, courseId}) => {
     let user = models.User.findOne({_id: id});
@@ -45,8 +38,8 @@ const removeModule = (_, {id}) => {
 };
 
 ////////// LESSON
-const createLesson = (_, {title, headline, content}) => {
-    return models.Lesson.create({title, headline, content});
+const createLesson = (parentValue, {data}, context, info) => {
+    return models.Lesson.create(data);
 };
 const updateLesson = (_, {id, data}) => {
     return models.findOneAndUpdate(id, data);
@@ -95,12 +88,8 @@ const removeDocument = (_, {id}) => {
 
 
 module.exports = {
-    // User
+    ...courseResolvers,
 
-    // Course
-    createCourse,
-    updateCourse,
-    removeCourse,
     // Module
     createModule,
     updateModule,

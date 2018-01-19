@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-
+// Hook up Apollo
+import {graphql} from 'react-apollo';
+import queries from '../../../queries';
 
 import {LibrarySearchHeader, LibrarySubNavigation} from '../../../components';
 import {CourseQuickAddForm} from '../../../forms';
@@ -11,21 +12,6 @@ import {Route} from 'react-router-dom';
 
 
 class _TrainerCourseLibraryDashboard extends Component {
-
-    state = {
-        courses: []
-    }
-
-    componentWillMount = async() => {
-        try {
-            let response = await axios.get('/courses');
-            let courses = response.data;
-            this.setState({courses});
-        } catch (e) {
-            throw e;
-        }
-
-    }
 
     render() {
         let {className} = this.props;
@@ -40,14 +26,16 @@ class _TrainerCourseLibraryDashboard extends Component {
                 <h3>Quick Add Course</h3>
                     <CourseQuickAddForm />
                 <h3>View Lessons by Course</h3>
-
+                    <ul>
+                    {this.props.lessons.map( lesson => <li>{lesson.title}</li>)}
+                    </ul>
                 </div>
             </div>
         )
     }
 }
 
-export default styled(_TrainerCourseLibraryDashboard)`
+const styledTrainerCourseLibraryDashboard = styled(_TrainerCourseLibraryDashboard)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: 4rem minmax(10rem, .3fr) 1fr 2fr;
@@ -95,3 +83,6 @@ export default styled(_TrainerCourseLibraryDashboard)`
 
 
 `;
+
+
+export default graphql(queries.lesson.getLessonListOverview)(styledTrainerCourseLibraryDashboard);

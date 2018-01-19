@@ -125,6 +125,8 @@ class _LessonCreator extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        console.log(this.props);
+        this.props.addLesson(this.state);
     }
 
 
@@ -332,4 +334,8 @@ const styledLessonCreator = styled(_LessonCreator)`
 
 
 // Hook up Data Services
-export default graphql(mutations.lesson.addLesson)(styledLessonCreator);
+export default graphql(mutations.lesson.addLesson, {
+    props: ({mutate}) => ({
+        addLesson: (data) => mutate({ variables: { data }})
+    }),
+})(styledLessonCreator);

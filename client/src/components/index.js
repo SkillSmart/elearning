@@ -6,3 +6,4 @@ export * from './navigation';
 export * from './searchAndFilter';
 export * from './video';
 export * from './editors';
+export * from './tables';

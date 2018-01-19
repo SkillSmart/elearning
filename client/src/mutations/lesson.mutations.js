@@ -10,6 +10,7 @@ const quickAddLesson = gql`
         }
     }
 `;
+
 const addLesson = gql`
     mutation AddLesson($data: LessonInput!) {
         createLesson(data: $data) {

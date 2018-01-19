@@ -1,22 +1,43 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import _ from 'lodash';
+
+// Hook up graphql
+import {graphql} from 'react-apollo';
+import {compose} from 'react-apollo';
+import mutations from '../../mutations';
 
 class LessonQuickAddForm extends Component {
   
     state = {
-
+        // Lesson Data
+        title: '',
+        headline: '',
+        content: '',
+        tags: '',
+        // Video Data
+        videoUrl: '',
+        videoTitle: ''
      }
     
-  
+     
     handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            let response = await axios.post('/lessons', this.state);
-            console.log(response);
-            console.log(this.state);
-        } catch (e) {
-            throw e;
+        console.log("Attempting to quickAddLesson", this.props);
+        // Create new Lesson
+        let lessonData = _.pick(this.state, ['title', 'content', 'tags']);
+        let lesson = this.props.quickAddLesson(lessonData)
+        // Save the video
+        if(this.state.videoUrl && this.state.videoTitle){
+            let videoData = _.pick(this.state, ['videoUrl', 'videoTitle']);
+            let video = this.props.addVideo();
+            console.log("Reporting Video Data");
+            this.props.addVideoToObject({
+                variables: video
+            })
         }
+       
+        // Associate the video with the lesson
+        this.props.quickAddLesson(this.state);
     }
   
     handleChange = (e) => {
@@ -36,18 +57,13 @@ class LessonQuickAddForm extends Component {
               type: 'text',
           },
           {
-              name: 'slug',
-              label: 'Lesson Slug',
-              type: 'text',
-          },
-          {
               name: 'headline',
               label: 'Lesson Headline',
               type: 'text',
           },
           {
-              name: 'video',
-              label: 'Lesson Video',
+              name: 'videoUrl',
+              label: 'Video URL',
               type: 'text',
           },
           {
@@ -79,4 +95,8 @@ class LessonQuickAddForm extends Component {
   }
 }
 
-export default LessonQuickAddForm;
+export default compose(
+    graphql(mutations.lesson.quickAddLesson, {name: 'quickAddLesson'}),
+    graphql(mutations.video.addVideo, {name: 'addVidoe'}),
+    graphql(mutations.video.addVideoToObject, {name: 'addVideoToObject'})
+)(LessonQuickAddForm);

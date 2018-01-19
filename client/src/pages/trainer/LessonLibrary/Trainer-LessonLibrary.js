@@ -1,33 +1,25 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-
+// Hook up Graphql
+import {graphql} from 'react-apollo';
+import {compose} from 'react-apollo';
+import queries from '../../../queries';
+import mutations from '../../../mutations';
 
 import {LibrarySearchHeader} from '../../../components';
-
 import {LessonQuickAddForm} from '../../../forms';
+import {LessonOverviewTable} from '../../../components';
 
 
 class _TrainerLessonLibrary extends Component {
 
-    state = {
-        lessons: []
-    }
-
-    componentWillMount = async() => {
-        try {
-            let response = await axios.get('/lessons');
-            let lessons = response.data;
-            this.setState({lessons});
-        } catch (e) {
-            throw e;
-        }
-
-    }
 
     render() {
-        let {className, match} = this.props;
+        let {className, match, lessonData: {lessons}} = this.props;
+     
+        console.log("[PROPS]", this.props);
         return (
+            
             <div className={className}>
 
                 {/* Search and Filter Bar */}
@@ -35,35 +27,7 @@ class _TrainerLessonLibrary extends Component {
                
                 {/* List of all lessons */}
                 <section className="lesson_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Title</td>
-                                <td>Headline</td>
-                                <td>Tags</td>
-                                <td>createdAt</td>
-                                <td>assigned</td>
-                                <td>video</td>
-                                <td>documents</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this
-                                .state
-                                .lessons
-                                .map(lesson => (
-                                    <tr>
-                                        <td>{lesson.title}</td>
-                                        <td>{lesson.headline}</td>
-                                        <td>{lesson.tags}</td>
-                                        <td>{lesson.createdAt}</td>
-                                        <td>{lesson.assigned}</td>
-                                        <td>{lesson.video}</td>
-                                        <td>{lesson.documents}</td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
+                    <LessonOverviewTable lessons={lessons} />
                 </section>
 
                 {/* The Sidebar*/}
@@ -78,7 +42,24 @@ class _TrainerLessonLibrary extends Component {
     }
 }
 
-export default styled(_TrainerLessonLibrary)`
+// Connect the Data to props
+const TrainerLessonLibrary = compose(
+    // graphql(mutations.lesson.addLesson, {
+    //     name: 'addLesson'
+    // }),
+    // graphql(mutations.lesson.quickAddLesson, {
+    //     name: 'quickAddLesson'
+    // }),
+    graphql(queries.lesson.getLessonListOverview, {
+        name: 'lessonData'
+    }),
+    graphql(queries.course.getCourseListOverview, {
+        name: 'courseData'
+    })
+)(_TrainerLessonLibrary);
+
+// Export the styled component
+export default styled(TrainerLessonLibrary)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: minmax(10rem, .3fr) 1fr 2fr;
@@ -113,8 +94,9 @@ export default styled(_TrainerLessonLibrary)`
         border-radius: 3px;
         padding: 1.5rem 3.5rem;
         background: white;
-
     }
 
 
 `;
+
+

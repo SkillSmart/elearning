@@ -11,6 +11,18 @@ const UserSchema = new Schema({
         type: Schema.ObjectId,
         ref: "Course"
     }],
+    favoriteLessons: [{
+        type: Schema.ObjectId,
+        ref: 'Lesson'
+    }],
+    favoriteDocuments: [{
+        type: Schema.ObjectId,
+        ref: 'Document'
+    }],
+    favoriteVideos: [{
+        type: Schema.ObjectId,
+        ref: 'Video'
+    }]
 
 });
 

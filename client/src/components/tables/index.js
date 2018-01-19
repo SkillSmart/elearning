@@ -1,0 +1,1 @@
+export {default as LessonOverviewTable} from './lessonOverview.table';
