@@ -75,6 +75,7 @@ const typeDefs = `
         updateLesson(id: ID!, data: LessonInput!): Lesson!
         removeLesson(id: ID!): Lesson!
         favLesson(lessonId: ID!, userId: ID!): User!
+        togglePublish(lessonId: ID!): Lesson!
         commentLesson(lessonId: ID!, userId: ID!, Comment: String!): Lesson!
 
         # MODULE ------------
@@ -94,12 +95,15 @@ const typeDefs = `
         createVideo(url: String!, title:String): Video!
         updateVideo(id: ID!, data:VideoInput!): Video!
         removeVideo(id: ID!): Video!
-
+        ### ACTIONS:VIDEO
+        associateVideo(videoId: ID!, targetId: ID!, targetClass: String!)
+        
         # DOCUMENT ----------
-
         createDocument(title: String!): Document!
         updateDocument(id: ID!, data: DocumentInput!): Document!
         removeDocument(id: ID!): Document!
+        ### ACTIONS:DOCUMENT
+        favDocument(id: ID!, userId: ID!): User!
     }
 
     type Subscription {

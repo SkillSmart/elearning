@@ -27,5 +27,7 @@ const favDocument = async (_, {id, userId}) => {
 module.exports = {
     createDocument,
     updateDocument,
-    removeDocument
+    removeDocument,
+    // Actions
+    favDocument
 };
