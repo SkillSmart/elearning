@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+// Hook up Graphql
+import {graphql} from 'react-apollo';
+import {lesson} from '../../../queries';
+// Components
 import ReactPlayer from 'react-player';
-
 import {TextEditor} from '../../../components';
 import {InputGroup} from '../../../forms';
 
