@@ -11,8 +11,7 @@ import TrainerCourseCreator from './Trainer-CourseCreator';
 import TrainerCourseDashboard from './Trainer-CourseDashboard';
 import TrainerCourseManager from './Trainer-CourseManager';
 import TrainerCourseLibrary from './Trainer-CourseLibrary';
-import TrainerCourseList from './Trainer-CourseListPage';
-import TrainerCourseUpdator from './Trainer-CourseUpdator';
+import TrainerCourseRetirer from './Trainer-CourseRetirer';
 
 const _TrainerCourseLibrary = ({className, match}) => (
     <div className={className}>
@@ -25,7 +24,8 @@ const _TrainerCourseLibrary = ({className, match}) => (
         {/* Routing */}
         <main className="display">
             <Route
-                path={`${match.path}/dashboard`}
+                exact
+                path={`${match.path}`}
                 component={TrainerCourseDashboard}/>
             <Route
                 path={`${match.path}/library`}
@@ -36,10 +36,7 @@ const _TrainerCourseLibrary = ({className, match}) => (
             <Route 
                 path={`${match.path}/new`} 
                 component={TrainerCourseCreator}/>
-            <Route
-                path={`${match.path}/update`}
-                component={TrainerCourseUpdator}/>
-            <Route path={`${match.path}/close`} component={TrainerCourseList}/>
+            <Route path={`${match.path}/close`} component={TrainerCourseRetirer}/>
         </main>
         <footer className="footer">
             The Course Library Footer
@@ -80,11 +77,7 @@ export default styled(_TrainerCourseLibrary)`
 // Additional configuration
 const linkMap = [
     {
-        url: 'dashboard',
-        label: "Dashboard"
-    },
-    {
-        url: 'dashboard',
+        url: '',
         label: "Dashboard"
     },
     {
@@ -93,7 +86,7 @@ const linkMap = [
     },
     {
         url: 'library',
-        label: "Library"
+        label: "Course Library"
     },
     {
         url: 'new',

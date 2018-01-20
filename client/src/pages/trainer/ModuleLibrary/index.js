@@ -11,6 +11,7 @@ import TrainerModuleCreator from './Trainer-ModuleCreator';
 import TrainerModuleDashboard from './Trainer-ModuleDashboard';
 import TrainerModuleManager from './Trainer-ModuleManager';
 import TrainerModuleLibrary from './Trainer-ModuleLibrary';
+import TrainerModuleRetirer from './Trainer-ModuleRetirer';
 
 const _TrainerCourseLibrary = ({className, match}) => (
     <div className={className}>
@@ -23,7 +24,8 @@ const _TrainerCourseLibrary = ({className, match}) => (
         {/* Routing */}
         <main className="display">
             <Route
-                path={`${match.path}/dashboard`}
+                exact
+                path={`${match.path}/`}
                 component={TrainerModuleDashboard}/>
             <Route
                 path={`${match.path}/library`}
@@ -34,6 +36,9 @@ const _TrainerCourseLibrary = ({className, match}) => (
             <Route 
                 path={`${match.path}/new`} 
                 component={TrainerModuleCreator}/>
+            <Route 
+                path={`${match.path}/new`} 
+                component={TrainerModuleRetirer}/>
         </main>
         <footer className="footer">
             The Course Library Footer
@@ -73,12 +78,8 @@ export default styled(_TrainerCourseLibrary)`
 
 // Additional configuration
 const linkMap = [
-    // {
-    //     url: 'dashboard',
-    //     label: "Dashboard"
-    // },
     {
-        url: 'dashboard',
+        url: '',
         label: "Dashboard"
     },
     {
@@ -92,5 +93,9 @@ const linkMap = [
     {
         url: 'new',
         label: "Add Module"
+    },
+    {
+        url: 'new',
+        label: "Retire Module"
     },
 ]

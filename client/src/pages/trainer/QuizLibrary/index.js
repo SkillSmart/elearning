@@ -23,7 +23,8 @@ const _TrainerQuizLibrary = ({className, match}) => (
         {/* Routing */}
         <main className="display">
             <Route
-                path={`${match.path}/dashboard`}
+                exact
+                path={`${match.path}/`}
                 component={TrainerQuizDashboard}/>
             <Route
                 path={`${match.path}/library`}
@@ -74,7 +75,7 @@ export default styled(_TrainerQuizLibrary)`
 // Additional configuration
 const linkMap = [
     {
-        url: 'dashboard',
+        url: '',
         label: "Dashboard"
     },
     {

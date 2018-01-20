@@ -21,7 +21,7 @@ class _TrainerCourseLibraryDashboard extends Component {
         return (
             <div className={className}>
                 
-                <h1>Course Dashboard</h1>
+                <h1>Lesson Dashboard</h1>
                 
 
                 {/* The Sidebar*/}

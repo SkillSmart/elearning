@@ -23,7 +23,8 @@ const _TrainerDocumentLibrary = ({className, match}) => (
         {/* Routing */}
         <main className="display">
             <Route
-                path={`${match.path}/dashboard`}
+                exact
+                path={`${match.path}`}
                 component={TrainerDocumentDashboard}/>
             <Route
                 path={`${match.path}/library`}

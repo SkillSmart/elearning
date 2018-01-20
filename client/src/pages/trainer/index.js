@@ -7,11 +7,11 @@ import {TrainerNavFixed} from '../../components';
 
 // Import Trainer related Pages
 import TrainerCourseLibrary from './CourseLibrary';
-import TrainerQuizLibrary from './QuizLibrary';
-import TrainerLessonLibrary from './LessonLibrary';
 import TrainerModuleLibrary from './ModuleLibrary';
+import TrainerLessonLibrary from './LessonLibrary';
 import TrainerVideoLibrary from './VideoLibrary';
 import TrainerDocumentLibrary from './DocumentLibrary';
+import TrainerQuizLibrary from './QuizLibrary';
 
 
 class _TrainerIndex extends Component {
@@ -27,6 +27,7 @@ class _TrainerIndex extends Component {
             <Route path={`${this.props.match.path}/modules`} component={TrainerModuleLibrary} />
             <Route path={`${this.props.match.path}/lessons`} component={TrainerLessonLibrary} />
             <Route path={`${this.props.match.path}/videos`} component={TrainerVideoLibrary} />
+            <Route path={`${this.props.match.path}/documents`} component={TrainerDocumentLibrary} />
             <Route path={`${this.props.match.path}/quizzes`} component={TrainerQuizLibrary} />
         </Switch>
         

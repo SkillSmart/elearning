@@ -21,14 +21,23 @@ class _TrainerCourseLibraryDashboard extends Component {
         return (
             <div className={className}>
                 
-                <h1>Course Dashboard</h1>
-                
+                <h1>Video Dashboard</h1>
+                <h2>Trending Videos</h2>
+                <ul>
+                    <li>Cool Video</li>
+                    <li>Cool Video</li>
+                    <li>Cool Video</li>
+                    <li>Cool Video</li>
+                </ul>
+                <h2>Video Reviews</h2>
+
+
 
                 {/* The Sidebar*/}
                 <div className="sidebar">
-                <h3>Quick Add Course</h3>
+                <h3>Quick Add Video</h3>
                     <CourseQuickAddForm />
-                <h3>View Lessons by Course</h3>
+                <h3>View Videos by Course</h3>
                     <ul>
                     {lessons.map( lesson => <li>{lesson.title}</li>)}
                     </ul>

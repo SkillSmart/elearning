@@ -20,7 +20,13 @@ const _TrainerNavFixed = ({className, baseUrl}) => (
                 <NavLink className="nav-link" to={`${baseUrl}/lessons`}>Lessons</NavLink>
             </li>
             <li className="nav-item">
-                <NavLink className="nav-link" to={`${baseUrl}/videos`}>Video Library</NavLink>
+                <NavLink className="nav-link" to={`${baseUrl}/videos`}>Videos</NavLink>
+            </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to={`${baseUrl}/documents`}>Documents</NavLink>
+            </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to={`${baseUrl}/quizzes`}>Quizzes</NavLink>
             </li>
             <li className="nav-item">
                 <NavLink className="nav-link" to={`${baseUrl}/dashboard`}>PROFILE</NavLink>

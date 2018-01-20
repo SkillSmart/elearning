@@ -23,7 +23,8 @@ const _TrainerCourseLibrary = ({className, match}) => (
         {/* Routing */}
         <main className="display">
             <Route
-                path={`${match.path}/dashboard`}
+                exact
+                path={`${match.path}`}
                 component={TrainerVideoDashboard}/>
             <Route
                 path={`${match.path}/manager`}
@@ -74,7 +75,7 @@ export default styled(_TrainerCourseLibrary)`
 // Additional configuration
 const linkMap = [
     {
-        url: 'dashboard',
+        url: '',
         label: "Dashboard"
     },
     {
