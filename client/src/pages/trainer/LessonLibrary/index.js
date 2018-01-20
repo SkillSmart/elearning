@@ -14,11 +14,14 @@ import TrainerLessonLibrary from './Trainer-LessonLibrary';
 // import TrainerLessonListPage from './Trainer-LessonListPage';
 import TrainerLessonUpdator from './Trainer-LessonUpdator';
 
+
+
 const _TrainerCourseLibrary = ({className, match}) => (
     <div className={className}>
 
         <CourseLibrarySubNavigation
             baseUrl={match.path}
+            linkMap={linkMap}
             className="subnavigation"/> 
         
         {/* Routing */}
@@ -74,3 +77,31 @@ export default styled(_TrainerCourseLibrary)`
     }
 
 `;
+
+
+const linkMap = [
+    {
+        url: '/dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: '/dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: '/manager',
+        label: "Manager"
+    },
+    {
+        url: '/library',
+        label: "Library"
+    },
+    {
+        url: '/new',
+        label: "Create Lesson"
+    },
+    {
+        url: '/close',
+        label: "Retire Course"
+    },
+]

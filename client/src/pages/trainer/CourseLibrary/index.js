@@ -19,6 +19,7 @@ const _TrainerCourseLibrary = ({className, match}) => (
 
         <CourseLibrarySubNavigation
             baseUrl={match.path}
+            linkMap={linkMap}
             className="subnavigation"/> 
         
         {/* Routing */}
@@ -74,3 +75,32 @@ export default styled(_TrainerCourseLibrary)`
     }
 
 `;
+
+
+// Additional configuration
+const linkMap = [
+    {
+        url: 'dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: 'dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: 'manager',
+        label: "Manager"
+    },
+    {
+        url: 'library',
+        label: "Library"
+    },
+    {
+        url: 'new',
+        label: "Add Course"
+    },
+    {
+        url: 'close',
+        label: "Retire Course"
+    },
+]

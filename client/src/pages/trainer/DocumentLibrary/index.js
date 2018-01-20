@@ -3,34 +3,25 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 
-import {LibrarySearchHeader} from '../../../components';
+import {LibrarySearchHeader, CourseLibrarySubNavigation} from '../../../components';
 import {LessonQuickAddForm} from '../../../forms';
 
 
-class _TrainerLessonLibrary extends Component {
+class _TrainerDocumentLibrary extends Component {
 
-    state = {
-        lessons: []
-    }
-
-    componentWillMount = async() => {
-        try {
-            let response = await axios.get('/lessons');
-            let lessons = response.data;
-            this.setState({lessons});
-        } catch (e) {
-            throw e;
-        }
-
-    }
 
     render() {
-        let {className} = this.props;
+        let {className, match} = this.props;
         return (
             <div className={className}>
 
                 {/* Search and Filter Bar */}
                 <LibrarySearchHeader className="searchbar"/>
+
+                <CourseLibrarySubNavigation
+                    baseUrl={match.path}
+                    linkMap={linkMap}
+                    className="subnavigation"/> 
 
                 {/* List of all lessons */}
                 <section className="lesson_table">
@@ -77,7 +68,7 @@ class _TrainerLessonLibrary extends Component {
     }
 }
 
-export default styled(_TrainerLessonLibrary)`
+export default styled(_TrainerDocumentLibrary)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: minmax(10rem, .3fr) 1fr 2fr;
@@ -117,3 +108,30 @@ export default styled(_TrainerLessonLibrary)`
 
 
 `;
+
+const linkMap = [
+    {
+        url: '/dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: '/dashboard',
+        label: "Dashboard"
+    },
+    {
+        url: '/manager',
+        label: "Manager"
+    },
+    {
+        url: '/library',
+        label: "Library"
+    },
+    {
+        url: '/new',
+        label: "Add Document"
+    },
+    {
+        url: '/close',
+        label: "Retire Course"
+    },
+]
