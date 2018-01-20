@@ -12,10 +12,14 @@ import {LessonQuickAddForm} from '../../../forms';
 import {LessonOverviewTable} from '../../../components';
 
 
-class _TrainerVideoLibrary extends Component {
+class _TrainerLessonLibrary extends Component {
+
+
 
     render() {
-        let {className, match, videoList} = this.props;
+        let {className, match, lessonData: { lessons }} = this.props;
+     
+        console.log("[PROPS]", this.props);
         return (
             
             <div className={className}>
@@ -25,7 +29,7 @@ class _TrainerVideoLibrary extends Component {
                
                 {/* List of all lessons */}
                 <section className="lesson_table">
-                    {/* <LessonOverviewTable lessons={videos} /> */}
+                    <LessonOverviewTable lessons={lessons} />
                 </section>
 
                 {/* The Sidebar*/}
@@ -42,7 +46,7 @@ class _TrainerVideoLibrary extends Component {
 
 
 // Export the styled component
-const TrainerVideoLibrary = styled(_TrainerVideoLibrary)`
+const TrainerLessonLibrary = styled(_TrainerLessonLibrary)`
     display: grid;
     grid-template-columns: 1fr minmax(15rem, .3fr) 1fr 1fr;
     grid-template-rows: minmax(10rem, .3fr) 1fr 2fr;
@@ -83,5 +87,12 @@ const TrainerVideoLibrary = styled(_TrainerVideoLibrary)`
 
 
 export default compose(
-    graphql(queries.lesson.getLessonListOverview, { name: 'videoList'}),
-)(TrainerVideoLibrary)
+    graphql(gql`
+        mutation {
+            createLesson(data: {title: "My first selfmade lesson"}) {
+                id
+            }
+        }
+    `, {name: 'addLesson'}),
+    graphql(queries.lesson.getLessonListOverview, { name: 'lessonData'}),
+)(TrainerLessonLibrary)

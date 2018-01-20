@@ -27,10 +27,10 @@ const _TrainerCourseLibrary = ({className, match}) => (
                 component={TrainerVideoDashboard}/>
             <Route
                 path={`${match.path}/manager`}
-                component={TrainerVideoDashboard}/>
+                component={TrainerVideoManager}/>
             <Route
                 path={`${match.path}/library`}
-                component={TrainerVideoDashboard}/>
+                component={TrainerVideoLibrary}/>
             <Route
                 path={`${match.path}/new`}
                 component={TrainerVideoCreator}/>
@@ -78,10 +78,6 @@ const linkMap = [
         label: "Dashboard"
     },
     {
-        url: 'dashboard',
-        label: "Dashboard"
-    },
-    {
         url: 'manager',
         label: "Manager"
     },
@@ -93,8 +89,8 @@ const linkMap = [
         url: 'new',
         label: "Add Video"
     },
-    {
-        url: 'close',
-        label: "Retire Course"
-    },
+    // {
+    //     url: 'close',
+    //     label: "Retire Course"
+    // },
 ]
